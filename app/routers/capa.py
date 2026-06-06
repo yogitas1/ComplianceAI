@@ -59,6 +59,7 @@ def approve_capa(
         entity_id=capa.id,
         action="approved",
         actor=payload.approved_by,
+        automated=False,
     )
 
     db.commit()

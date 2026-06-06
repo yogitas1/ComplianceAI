@@ -4,7 +4,7 @@ AI-powered manufacturing compliance demo backend. It detects out-of-spec
 batch readings, uses OpenAI **gpt-4o** to generate FDA 21 CFR Part 820
 findings and CAPA drafts, and maintains a full audit trail.
 
-**Stack:** FastAPI · SQLAlchemy + Alembic · PostgreSQL (InsForge) · OpenAI
+**Stack:** FastAPI · SQLAlchemy + Alembic · PostgreSQL (Supabase) · OpenAI
 gpt-4o · deployed on Vercel.
 
 ## Architecture
@@ -15,7 +15,7 @@ gpt-4o · deployed on Vercel.
 | ORM | SQLAlchemy models in `app/models.py` |
 | Migrations | Alembic (`alembic.ini`, `migrations/`) |
 | AI | `app/openai_client.py` — gpt-4o, JSON response mode |
-| Deploy | Vercel via `api/index.py` + `vercel.json` (branch `master`) |
+| Deploy | Vercel via `api/index.py` + `vercel.json` (branch `main`) |
 
 ### Data model
 
@@ -31,11 +31,21 @@ gpt-4o · deployed on Vercel.
 
 | Var | Purpose |
 |-----|---------|
-| `DATABASE_URL` | PostgreSQL connection string (from InsForge). Falls back to local SQLite if unset. |
+| `DATABASE_URL` | PostgreSQL connection string (Supabase). Falls back to local SQLite if unset. |
 | `OPENAI_API_KEY` | OpenAI key; required for `POST /api/detect`. |
 | `OPENAI_MODEL` | Optional, defaults to `gpt-4o`. |
 
 Copy `.env.example` to `.env` and fill in values.
+
+> **Supabase note:** use the **Session pooler** connection string
+> (`...pooler.supabase.com:5432`). The direct host (`db.<ref>.supabase.co`)
+> is IPv6-only and unreachable from IPv4-only environments. The app
+> auto-normalizes `postgres://` → `postgresql+psycopg2://`.
+>
+> The demo Supabase project already has the four tables (with CHECK
+> constraints on the `status`/`severity` enums) and the seed data created,
+> so no migration step is required against it. `gpt-4o` output is normalized
+> in code to satisfy those enum constraints.
 
 ## Local setup
 

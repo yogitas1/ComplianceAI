@@ -23,6 +23,28 @@ _EXPECTED_KEYS = (
     "corrective_action",
 )
 
+# DB severity is constrained to these values; map common synonyms the model
+# may return (e.g. "High", "Medium") onto the allowed set.
+_SEVERITY_MAP = {
+    "critical": "critical",
+    "high": "critical",
+    "severe": "critical",
+    "major": "major",
+    "medium": "major",
+    "moderate": "major",
+    "minor": "minor",
+    "low": "minor",
+    "negligible": "minor",
+}
+
+# Max lengths of the corresponding varchar columns in the database.
+_FINDING_TYPE_MAX = 100
+_REGULATORY_REF_MAX = 100
+
+
+def _normalize_severity(value: str) -> str:
+    return _SEVERITY_MAP.get((value or "").strip().lower(), "major")
+
 
 def _build_user_prompt(batch: BatchRecord) -> str:
     return (
@@ -60,4 +82,11 @@ def analyze_deviation(batch: BatchRecord) -> dict:
     )
     content = response.choices[0].message.content or "{}"
     data = json.loads(content)
-    return {key: data.get(key, "") for key in _EXPECTED_KEYS}
+    result = {key: str(data.get(key, "") or "") for key in _EXPECTED_KEYS}
+    # Conform model output to the database's constraints.
+    result["severity"] = _normalize_severity(result["severity"])
+    result["finding_type"] = (
+        result["finding_type"] or "Temperature deviation"
+    )[:_FINDING_TYPE_MAX]
+    result["regulatory_ref"] = result["regulatory_ref"][:_REGULATORY_REF_MAX]
+    return result
