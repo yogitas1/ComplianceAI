@@ -24,12 +24,20 @@
         "dest": "api/index.py"
       },
       {
+        "src": "/findings",
+        "dest": "frontend/findings"
+      },
+      {
         "src": "/findings/(.*)",
         "dest": "frontend/findings/$1"
       },
       {
         "src": "/capa/(.*)",
         "dest": "frontend/capa/$1"
+      },
+      {
+        "src": "/audit-trail",
+        "dest": "frontend/audit-trail"
       },
       {
         "src": "/(.*)",
