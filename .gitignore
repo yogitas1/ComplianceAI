@@ -11,3 +11,4 @@ env/
 .DS_Store
 .vercel
 .pytest_cache/
+.ruff_cache/

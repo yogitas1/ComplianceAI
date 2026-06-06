@@ -23,9 +23,10 @@ def upgrade() -> None:
     op.create_table('audit_log',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('entity_type', sa.String(length=64), nullable=False),
-    sa.Column('entity_id', sa.String(length=64), nullable=False),
-    sa.Column('action', sa.String(length=128), nullable=False),
+    sa.Column('entity_id', sa.Integer(), nullable=False),
+    sa.Column('action', sa.String(length=200), nullable=False),
     sa.Column('actor', sa.String(length=128), nullable=False),
+    sa.Column('automated', sa.Boolean(), nullable=False),
     sa.Column('timestamp', sa.DateTime(timezone=True), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -36,7 +37,7 @@ def upgrade() -> None:
     sa.Column('temperature_reading', sa.Float(), nullable=False),
     sa.Column('temp_spec_min', sa.Float(), nullable=False),
     sa.Column('temp_spec_max', sa.Float(), nullable=False),
-    sa.Column('production_date', sa.DateTime(timezone=True), nullable=False),
+    sa.Column('production_date', sa.Date(), nullable=False),
     sa.Column('operator_id', sa.String(length=64), nullable=False),
     sa.Column('status', sa.String(length=32), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),

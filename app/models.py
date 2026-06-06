@@ -1,7 +1,14 @@
-"""SQLAlchemy ORM models for the AuditAI compliance backend."""
-from datetime import datetime, timezone
+"""SQLAlchemy ORM models for the AuditAI compliance backend.
+
+Column types mirror the existing Supabase schema: ``production_date`` is a
+DATE, ``audit_log.entity_id`` is an INTEGER, and ``audit_log`` carries an
+``automated`` flag.
+"""
+from datetime import date, datetime, timezone
 
 from sqlalchemy import (
+    Boolean,
+    Date,
     DateTime,
     Float,
     ForeignKey,
@@ -27,7 +34,7 @@ class BatchRecord(Base):
     temperature_reading: Mapped[float] = mapped_column(Float)
     temp_spec_min: Mapped[float] = mapped_column(Float)
     temp_spec_max: Mapped[float] = mapped_column(Float)
-    production_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    production_date: Mapped[date] = mapped_column(Date)
     operator_id: Mapped[str] = mapped_column(String(64))
     # "compliant" | "deviation"
     status: Mapped[str] = mapped_column(String(32), default="compliant")
@@ -97,9 +104,10 @@ class AuditLog(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     entity_type: Mapped[str] = mapped_column(String(64))
-    entity_id: Mapped[str] = mapped_column(String(64))
-    action: Mapped[str] = mapped_column(String(128))
+    entity_id: Mapped[int] = mapped_column(Integer)
+    action: Mapped[str] = mapped_column(String(200))
     actor: Mapped[str] = mapped_column(String(128))
+    automated: Mapped[bool] = mapped_column(Boolean, default=True)
     timestamp: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=_utcnow
     )

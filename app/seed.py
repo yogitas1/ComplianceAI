@@ -13,8 +13,8 @@ from app.audit import log_action
 from app.database import SessionLocal
 from app.models import BatchRecord
 
-_NOW = datetime.now(timezone.utc)
-_YESTERDAY = _NOW - timedelta(days=1)
+_TODAY = datetime.now(timezone.utc).date()
+_YESTERDAY = _TODAY - timedelta(days=1)
 
 
 # The headline deviation scenario.
@@ -37,7 +37,7 @@ COMPLIANT_BATCHES = [
         temperature_reading=19.2,
         temp_spec_min=15.0,
         temp_spec_max=25.0,
-        production_date=_NOW - timedelta(days=5),
+        production_date=_TODAY - timedelta(days=5),
         operator_id="OP-441",
         status="compliant",
     ),
@@ -47,7 +47,7 @@ COMPLIANT_BATCHES = [
         temperature_reading=21.7,
         temp_spec_min=15.0,
         temp_spec_max=25.0,
-        production_date=_NOW - timedelta(days=4),
+        production_date=_TODAY - timedelta(days=4),
         operator_id="OP-309",
         status="compliant",
     ),
@@ -57,7 +57,7 @@ COMPLIANT_BATCHES = [
         temperature_reading=17.5,
         temp_spec_min=15.0,
         temp_spec_max=25.0,
-        production_date=_NOW - timedelta(days=3),
+        production_date=_TODAY - timedelta(days=3),
         operator_id="OP-512",
         status="compliant",
     ),
@@ -67,7 +67,7 @@ COMPLIANT_BATCHES = [
         temperature_reading=23.9,
         temp_spec_min=15.0,
         temp_spec_max=25.0,
-        production_date=_NOW - timedelta(days=2),
+        production_date=_TODAY - timedelta(days=2),
         operator_id="OP-309",
         status="compliant",
     ),

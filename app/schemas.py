@@ -1,5 +1,5 @@
 """Pydantic schemas for request/response serialization."""
-from datetime import datetime
+from datetime import date, datetime
 
 from pydantic import BaseModel, ConfigDict
 
@@ -13,7 +13,7 @@ class BatchRecordOut(BaseModel):
     temperature_reading: float
     temp_spec_min: float
     temp_spec_max: float
-    production_date: datetime
+    production_date: date
     operator_id: str
     status: str
     created_at: datetime
@@ -59,9 +59,10 @@ class AuditLogOut(BaseModel):
 
     id: int
     entity_type: str
-    entity_id: str
+    entity_id: int
     action: str
     actor: str
+    automated: bool
     timestamp: datetime
 
 
