@@ -14,20 +14,14 @@ def _normalize_database_url(url: str) -> str:
     return url
 
 
-# Read directly from os.environ — bypasses dotenv which doesn't run on Vercel
 _raw = os.environ.get("DATABASE_URL", "")
-DATABASE_URL = _normalize_database_url(_raw) if _raw else ""
+DATABASE_URL = _normalize_database_url(_raw) if _raw else "sqlite:///./auditai.db"
 
 _connect_args = (
     {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 )
 
-engine = create_engine(
-    DATABASE_URL,
-    pool_pre_ping=True,
-    connect_args=_connect_args,
-)
-
+engine = create_engine(DATABASE_URL, pool_pre_ping=True, connect_args=_connect_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -36,7 +30,6 @@ class Base(DeclarativeBase):
 
 
 def get_db() -> Generator[Session, None, None]:
-    """FastAPI dependency that yields a database session."""
     db = SessionLocal()
     try:
         yield db
