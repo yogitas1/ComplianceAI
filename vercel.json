@@ -16,30 +16,6 @@
         "dest": "api/index.py"
       },
       {
-        "src": "/docs",
-        "dest": "api/index.py"
-      },
-      {
-        "src": "/openapi.json",
-        "dest": "api/index.py"
-      },
-      {
-        "src": "/findings",
-        "dest": "frontend/findings"
-      },
-      {
-        "src": "/findings/(.*)",
-        "dest": "frontend/findings/$1"
-      },
-      {
-        "src": "/capa/(.*)",
-        "dest": "frontend/capa/$1"
-      },
-      {
-        "src": "/audit-trail",
-        "dest": "frontend/audit-trail"
-      },
-      {
         "src": "/(.*)",
         "dest": "frontend/$1"
       }
