@@ -1,0 +1,26 @@
+[
+  {
+    "deviation_id": "DEV-2024-0173",
+    "batch_id": "BCH-2024-0724",
+    "title": "Temperature excursion during staging",
+    "status": "closed",
+    "filed_at": "2024-09-18T14:25:00Z",
+    "owner": "Quality Operations"
+  },
+  {
+    "deviation_id": "DEV-2024-0211",
+    "batch_id": "BCH-2024-0816",
+    "title": "Incomplete line clearance checklist",
+    "status": "closed",
+    "filed_at": "2024-10-07T09:10:00Z",
+    "owner": "Manufacturing Quality"
+  },
+  {
+    "deviation_id": "DEV-2024-0264",
+    "batch_id": "BCH-2024-0875",
+    "title": "Packaging reconciliation variance",
+    "status": "investigation_complete",
+    "filed_at": "2024-11-03T16:45:00Z",
+    "owner": "Quality Assurance"
+  }
+]
