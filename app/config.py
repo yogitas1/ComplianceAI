@@ -21,7 +21,9 @@ def _normalize_database_url(url: str) -> str:
 
 # Fall back to a local SQLite database so the app boots even without a
 # DATABASE_URL configured (useful for local development and CI smoke tests).
-_RAW_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./auditai.db")
+_RAW_DATABASE_URL = os.getenv("DATABASE_URL")
+if not _RAW_DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is required")
 DATABASE_URL = _normalize_database_url(_RAW_DATABASE_URL)
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
