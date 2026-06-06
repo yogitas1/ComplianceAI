@@ -58,8 +58,8 @@ class AuditLogOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
-    entity_type: str
-    entity_id: str
+    entity_type: str | None = None
+    entity_id: int | None = None
     action: str
     actor: str
     timestamp: datetime
