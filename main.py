@@ -2,8 +2,10 @@ from fastapi import FastAPI, HTTPException
 from sqlalchemy.exc import SQLAlchemyError
 
 from adaptors.erp_adaptor import ERPAdaptor
+from modules.capa_module import router as capa_router
 
 app = FastAPI(title="AuditAI Demo")
+app.include_router(capa_router)
 
 
 @app.post("/api/erp/simulate-deviation")
